@@ -21,8 +21,8 @@ single `curl` with a browser user agent on 2026-07-07).
 
 - **Known answer: DocumentId 263222.** Figures from two of its pages are
   already transcribed in the `edmonton-tax-viz` repo
-  (`docs/FINDINGS_utility_validation.md`). The expected values are read from
-  there at check time and are not copied into this repo.
+  (`docs/FINDINGS_utility_validation.md`). The expected values are kept in the
+  private data repo and are not copied into this repo.
 - **Four another project is still missing:** 244141, 164273, 286947, 42331.
   They span 2011 to 2024, so they also test old documents.
 - **One batch:** the attachments of one full agenda (about 140 links), for
@@ -65,9 +65,20 @@ terms. For each file:
 4. For 263222 only: the extracted text of the two transcribed pages contains
    the transcribed figures.
 
-**The checker is proven before it is trusted**: the 403 challenge body
-returned to the server on 2026-11-16 is fed to it and must fail check 1, and
-a 263222 text with one figure altered must fail check 4.
+**The checker is `src/check_pdf.py`**, guarded by `tests/test_check_pdf.py`
+(made-up fixtures). It was also run on the 403 challenge body the server got
+on 2026-11-16 and failed it on check 1. Check 2's cross-route sha256
+comparison is not in it yet; it is done by reading the recorded hashes.
+
+    .venv/bin/python -m src.check_pdf FILE.pdf \
+        --expect data/raw/private/known_answers/263222.json
+
+Known answers are document text, so they live in the private data repo
+(`known_answers/<DocumentId>.json`: page number to the strings that page must
+contain). The 263222 file was written from the `edmonton-tax-viz`
+transcription. Whether the deck's printed page numbers equal the PDF's page
+positions is untested; if they differ, the failure names the page where each
+figure was found.
 
 ## What is recorded per route
 

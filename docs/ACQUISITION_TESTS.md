@@ -45,10 +45,8 @@ under the attachment's title, not the id); D is built only if that matching
 proves unreliable or the per-document effort is the thing in the way. E costs
 one message and runs in parallel.
 
-**A and B need the owner's yes before they run.** No automated fetch from the
-laptop has been approved. B goes further than A: a browser user agent on a
-non-browser client is the mildest form of presenting as a browser, and the
-standing instruction is not to work around the challenge.
+**A and B were approved for testing by the owner on 2026-11-16**, default
+user agent first. The owner's browser is Firefox.
 
 All routes: one request at a time, at least 5 seconds apart, stop at the
 first challenge response rather than retrying.
@@ -86,8 +84,8 @@ Results go in this file as a dated table. A route is chosen in
 
 Proposed: the laptop extracts nothing. It pushes PDFs to a folder on the
 server over the existing SSH access; the server validates, extracts, commits
-text and manifest to the private data repo, and deletes the PDF. Open
-question for the owner: keep the PDFs anywhere, or only their sha256.
+text and manifest to the private data repo, and deletes the PDF. The PDF is
+not kept: text and sha256 only (owner, 2026-11-16).
 
 ## Convention this follows
 

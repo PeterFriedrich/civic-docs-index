@@ -10,15 +10,16 @@ One bullet each: **the thing**, then why not, and a pointer if a decision row
 or doc holds the argument. A turned-down idea that has a locked decision needs
 no bullet here — the brief already carries `docs/DECISIONS.md`.
 
-## What it does (proposed 2026-11-16, not locked)
+## What it does (confirmed by the owner 2026-11-16)
 
-Evidence and probe results: `docs/ACQUISITION_TESTS.md`. Nothing below is a
-locked decision until it has a row in `docs/DECISIONS.md`.
+Evidence and probe results: `docs/ACQUISITION_TESTS.md`. Decision rows:
+`docs/DECISIONS.md`.
 
 1. **Catalogue**, crawled on the server from the portal's open endpoints
    (calendar JSON, agenda HTML, minutes HTML): meetings from 2012 on, agenda
    items, attachment file names, DocumentIds, report numbers, minutes text.
-2. **Attachment text on request.** A session asks for a DocumentId; the PDF is
+2. **Attachment text**, per DocumentId during the route tests and then by
+   whole agenda for meetings a project needs. The PDF is
    acquired off the server by whichever route `docs/ACQUISITION_TESTS.md`
    picks, text is extracted per page, and the text plus a manifest row (sha256,
    bytes, pages, route, date) is committed to the private data repo.
@@ -33,16 +34,19 @@ locked decision until it has a row in `docs/DECISIONS.md`.
 - **Getting past the Cloudflare challenge on PDFs from the server** (challenge
   solvers, fingerprint spoofing, proxies or other exit IPs). The owner has not
   asked for it; PDFs are acquired off the server. `docs/ACQUISITION_TESTS.md`.
-- **Mirroring every attachment.** Text is acquired for the documents sessions
-  ask for. PDF and text sizes are unmeasured, and the server disk is small.
-- **Publishing document text or PDFs.** This repo holds code and made-up
-  fixtures; extracted text lives in the private data repo.
+- **Mirroring every attachment.** Text is acquired for the documents and
+  meetings sessions ask for. PDF and text sizes are unmeasured, and the server disk is small.
+- **Publishing document text or PDFs.** Extracted text lives in the private
+  data repo. Names, titles and ids are public and may appear here.
 - **Embeddings or semantic search first.** Keyword search and ID lookup answer
   the known questions; embedding is slow on this server. Revisit after FTS5 is
   in use.
 - **Answering questions or summarising.** The index returns passages with
   their source; the calling session reads them.
 - **A web page or hosted service.** The callers are sessions on this server.
+- **A hosted database as the store, for now.** The text files are the source
+  of truth, so loading them elsewhere later is one script. A free-tier hosted
+  database is to be tested (`TODO.md`).
 - **OCR and structured table extraction, for now.** The scanned share is
   unmeasured; decide after the first test batch.
 - **Other portals and non-council documents, for now.** Edmonton's council

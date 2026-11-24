@@ -15,6 +15,7 @@ A searchable index of civic documents, starting with Edmonton's eSCRIBE council 
 - `docs/TOKEN_EFFICIENCY.md` — context/token hygiene (what NOT to read raw, session-summary archiving) and disk use (scratch intermediates, `df -h /` before a big build). **Read before bulk-reading data or summaries.**
 - `docs/DATA_ISSUES.md` — register of defects in data we DON'T control: evidence, what it breaks here, and **whether the publisher has been told**. A finding that never leaves the repo is the standing failure mode; "the artifact exists" is not sent.
 - `docs/ASSUMPTIONS.md` — index of the premises a published number rests on that no guard proves: status, rough size if wrong, pointer to the evidence. **Add a row when a number starts resting on something unproven; read it before scoping an audit.** Rows copy no figures.
+- `docs/WANTED.md` — documents other sessions need but can't fetch: requester, reason, status. **Update a row when a document is fetched, and tell its requester.**
 - `docs/AUDIT_LEDGER.md` — coverage map of executed audit runs. **Add a row when an audit executes; check it before scoping a new one.**
 - `data/DATA.md` — data source details, column names, known quirks. **Read before touching any data files. Update if you discover anything new.**
 - `docs/REMOTE_VM.md` — **read FIRST in a Claude Code web/remote VM session**: network-policy constraints, environment setup.

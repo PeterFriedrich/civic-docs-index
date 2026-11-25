@@ -155,7 +155,10 @@ written, then writes into the private repo (`data/raw/private/`):
 
 - `text/<id>.txt`, one `=== page N ===` block per page (not for a scan);
 - a `manifest.csv` row: document_id, title, sha256, bytes, pages,
-  text_bytes, scanned, route, obtained, ingested;
+  text_bytes, scanned, word_per_line, route, obtained, ingested.
+  `word_per_line=1` means the text came out with a space-only line after
+  every word: kept, but phrase search fails on it until re-extracted. A
+  manifest with a different header is refused, not appended to;
 - `pdfs/<id>.pdf`, a copy kept for re-extraction (better extraction, OCR)
   without re-fetching. `pdfs/` is gitignored in the private repo: never
   committed, and not backed up off the laptop.

@@ -29,6 +29,7 @@ def test_text_pdf_keeps_pdf_writes_text_and_row(tmp_path):
     [row] = manifest(root)
     assert row["title"] == "Some Title, Attachment 1"  # comma survives the CSV
     assert (row["pages"], row["scanned"], row["route"], row["obtained"]) == ("2", "0", "C", "2026-11-24")
+    assert row["word_per_line"] == "0"
 
 
 def test_scan_is_recorded_not_dropped(tmp_path):
@@ -72,3 +73,38 @@ def test_non_numeric_id_rejected(tmp_path):
         assert e.code == 2
     else:
         raise AssertionError("expected argparse error")
+
+
+# The shape of text/295437.txt page 1: a space-only line after every word.
+WORD_PER_LINE = "THE\n \nCITY\n \nOF\n \nEDMONTON\n \n \nBYLAW\n \n21442\n \n"
+
+
+def test_word_per_line_text_is_kept_and_flagged(tmp_path, monkeypatch, capsys):
+    import pypdf
+
+    monkeypatch.setattr(pypdf.PageObject, "extract_text", lambda self, *a, **k: WORD_PER_LINE)
+    rc, root = run(tmp_path, make_pdf(["alpha"]))
+    assert rc == 0
+    assert '"word_per_line": true' in capsys.readouterr().out
+    assert (root / "text" / "101.txt").read_text().startswith("=== page 1 ===\nTHE\n \nCITY")
+    [row] = manifest(root)
+    assert row["word_per_line"] == "1"
+
+
+def test_one_cell_per_line_table_is_not_word_per_line():
+    # text/164273.txt: a table, one cell per line, no space-only lines.
+    assert not ingest_pdf.word_per_line("Highlands\nReconstruction\nHolyrood\nMicrosurfacing\n2015\n")
+    assert not ingest_pdf.word_per_line("")
+
+
+def test_old_manifest_header_refused_nothing_appended(tmp_path, capsys):
+    root = tmp_path / "private"
+    root.mkdir()
+    old = "document_id,title,sha256,bytes,pages,text_bytes,scanned,route,obtained,ingested\n"
+    (root / "manifest.csv").write_text(old)
+    src = write(tmp_path, make_pdf(["alpha"]))
+    rc = ingest_pdf.main([str(src), "--id", "101", "--root", str(root)])
+    assert rc == 1
+    assert "manifest header" in capsys.readouterr().out
+    assert (root / "manifest.csv").read_text() == old
+    assert not (root / "text").exists()

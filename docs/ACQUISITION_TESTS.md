@@ -1,4 +1,4 @@
-# PDF acquisition: route tests (plan, nothing run off the server yet)
+# PDF acquisition: route tests (A, B, C run 2026-11-24)
 
 The council portal serves listings and agenda HTML to the server but answers
 every attachment request with a Cloudflare challenge. This plan compares ways
@@ -13,7 +13,8 @@ same documents. It does not try to get past the challenge.
 | `GET /Meeting.aspx?Id=<guid>&Agenda=Agenda&lang=English` | 200, 216 KB |
 | `GET /filestream.ashx?DocumentId=263222` | 403, `cf-mitigated: challenge`, HTML titled "Verifying your browser" |
 
-Not measured anywhere yet: PDF size, extracted text size, share of scanned
+Measured on the laptop 2026-11-24: see "Results" below. Before that, not
+measured anywhere: PDF size, extracted text size, share of scanned
 PDFs, and whether any route still works from the laptop (last success was a
 single `curl` with a browser user agent on 2026-07-07).
 
@@ -90,6 +91,56 @@ figure was found.
 
 Results go in this file as a dated table. A route is chosen in
 `docs/DECISIONS.md` only after that table exists.
+
+## Results, 2026-11-24 (laptop)
+
+### Routes A and B: blocked
+
+One request each for 263222, 11 s apart, stopped at the first challenge.
+
+| Route | HTTP | Body | `check_pdf` |
+|---|---|---|---|
+| A, default `curl` user agent | 403, `cf-mitigated: challenge` | 307,601 B HTML | fail, check 1 (challenge page) |
+| B, Firefox 133 user agent | 403, `cf-mitigated: challenge` | 307,772 B HTML | fail, check 1 (challenge page) |
+
+The laptop gets the same answer as the server. The 2026-07-07 browser-agent
+success no longer reproduces.
+
+### Route C: 7 of 7 obtained
+
+The owner opened each link in Firefox; files saved to `~/Downloads` under
+the attachment title. The first link showed the "Verifying your browser"
+page, then downloaded. Effort: one click per document; minutes not timed.
+
+| DocumentId | Saved as (title) | Bytes | Pages | Text | sha256 (first 12) |
+|---|---|---|---|---|---|
+| 263222 | PRESENTATION 7.4 EXT03099 - EPCOR Water Services - 2024 Annual Performance Based Regulation Progress Report | 414,863 | 20 | ok, 11,170 B; known answers pass (see below) | `65d247d8eba6` |
+| 295439 | Signed Bylaw 21442 - Published April 29, 2026 | 656,733 | 11 | **scanned, no text layer** (Ricoh copier scan) | `fe21c20e42cc` |
+| 295437 | Attachment 1 - FCS03408 - Bylaw 21442 | 232,471 | 11 | ok, 14,724 B | `9fd6b6d61640` |
+| 164273 | IIS01330 Neighbourhood Renewal Funds - Attachment 1 - Completed NRP Projects 2009 - 2022 | 55,142 | 10 | ok, 9,970 B | `7d723d8fee9c` |
+| 286947 | Report - OCA03356 - Neighbourhood Renewal Program Audit | 98,538 | 2 | ok, 3,079 B | `b4174cbbc31c` |
+| 244141 | Memo to Council - Edmonton's Industrial Development Situation - Nov 29, 2024 | 594,004 | 8 | ok, 11,723 B | `50c073427f72` |
+| 42331 | Costs and Revenues for New Areas - 2011CF7611 | 249,569 | 17 | ok, 37,915 B | `38f548603f1d` |
+
+- **Oldest document (42331, 2011):** obtained, with a text layer.
+- **Scanned:** 1 of 7, the signed bylaw. Signed bylaws are likely scans as a
+  class. The unsigned bylaw attached to the report (295437) is the same 11
+  pages with a text layer, and the 2026-04-28 minutes show 21442 passed all
+  three readings with no amending motion, so its text stands in for the
+  scan. Cite the signed copy as the official version.
+- **286947 is 2 pages:** possibly the cover report only, with the full audit
+  a separate attachment on the same item. Unchecked.
+- **Known answers (263222):** the four figures recorded for page 6 are on PDF
+  page 7; page 9's are on page 9. A single-page transcription slip, not a
+  numbering offset. Corrected in the private repo (`9fea58e`); the check now
+  passes.
+- **Matching file to DocumentId:** done by title and by which link was
+  opened, which works only when the expected title is known. Two files were
+  at first missed because they sorted below newer ones. For a batch this is
+  the weak point, and it is the case for route D (files saved as
+  `<DocumentId>.pdf`).
+- **Batch:** not run.
+- **Cross-route sha256:** nothing to compare; only route C returned PDFs.
 
 ## Getting files from the laptop to the server
 

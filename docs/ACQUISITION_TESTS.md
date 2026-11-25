@@ -142,12 +142,31 @@ page, then downloaded. Effort: one click per document; minutes not timed.
 - **Batch:** not run.
 - **Cross-route sha256:** nothing to compare; only route C returned PDFs.
 
-## Getting files from the laptop to the server
+## Where text and PDFs live
 
-Proposed: the laptop extracts nothing. It pushes PDFs to a folder on the
-server over the existing SSH access; the server validates, extracts, commits
-text and manifest to the private data repo, and deletes the PDF. The PDF is
-not kept: text and sha256 only (owner, 2026-11-16).
+Decided 2026-11-24 (owner), replacing the earlier proposal to push PDFs to
+the server and extract there. Everything happens on the laptop, where the
+browser routes deliver the files and the disk is larger:
+
+    .venv/bin/python -m src.ingest_pdf ~/Downloads/<title>.pdf --id <DocumentId>
+
+`src/ingest_pdf.py` runs `check_pdf`, refuses a failing file with nothing
+written, then writes into the private repo (`data/raw/private/`):
+
+- `text/<id>.txt`, one `=== page N ===` block per page (not for a scan);
+- a `manifest.csv` row: document_id, title, sha256, bytes, pages,
+  text_bytes, scanned, route, obtained, ingested;
+- `pdfs/<id>.pdf`, a copy kept for re-extraction (better extraction, OCR)
+  without re-fetching. `pdfs/` is gitignored in the private repo: never
+  committed, and not backed up off the laptop.
+
+The id is passed by hand because the browser names the file by title. The
+same id with the same sha256 is a no-op; with a different sha256 it is
+refused. The owner deletes the `~/Downloads` copy after the private repo is
+pushed. The server gets the text by `git pull`; it never sees a PDF.
+
+First run 2026-11-24: all 7 route C files, private repo `f7680ea`; the
+sha256 values match the results table above.
 
 ## Convention this follows
 

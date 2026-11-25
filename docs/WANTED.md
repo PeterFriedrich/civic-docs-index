@@ -19,7 +19,8 @@ says `not yet told` until it is. Add `told YYYY-MM-DD` to the status once sent.
 | DocumentId | Title | Requester | Why | Added | Status |
 |---|---|---|---|---|---|
 | 164273 | Completed NRP Projects 2009–2022 | `edmonton-tax-viz` | Last unread source for the road reconstruction sub-asset split (its `docs/SPEC_cost_gaps.md` §3.1) | 2026-11-24 | fetched 2026-11-24, `text/164273.txt`; told 2026-11-25 |
-| 286947 | City Auditor's Neighbourhood Renewal audit | `edmonton-tax-viz` | Same as 164273 | 2026-11-24 | fetched 2026-11-24, `text/286947.txt`. Only 2 pages: may be the cover report, the full audit possibly a separate attachment (unchecked); told 2026-11-25 |
+| 286947 | City Auditor's Neighbourhood Renewal audit | `edmonton-tax-viz` | Same as 164273 | 2026-11-24 | fetched 2026-11-24, `text/286947.txt`. Cover report only (2 pages, ends "ATTACHMENT 1"; the audit is 286336); told 2026-11-25 |
 | 295439 | Signed Bylaw 21442, 2026 Property Tax and Supplementary Property Tax Bylaw (published 2026-04-29). Item 8.1, City Council 2026-04-28; report FCS03408 is 295436 and the unsigned bylaw is 295437 | `edmonton-tax-viz` | Blind check of the 2026 mill rates against the primary document, not the `pwis-wc4c` dataset | 2026-11-24 | fetched 2026-11-24: a scan, no text (`manifest.csv` scanned=1). Use `text/295437.txt`, the unsigned bylaw, which passed all three readings unamended per the 04-28 minutes; cite 295439; told 2026-11-25 |
+| 286336 | Attachment 1 - OCA03356 - Neighbourhood Renewal Program Audit (the audit itself; 286947 is its cover). Audit Committee 2026-02-04, meeting `03800f25-e306-4f24-86ab-7873f79f9b24`, where the cover report is listed as 286335; the meeting that carries 286947 is not located | `edmonton-tax-viz` | Same as 164273 | 2026-11-25 | wanted |
 
 URLs follow `https://pub-edmonton.escribemeetings.com/filestream.ashx?DocumentId=<id>`.

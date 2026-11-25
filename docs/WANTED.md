@@ -16,8 +16,8 @@ the text's path there, and the requester is told.
 
 | DocumentId | Title | Requester | Why | Added | Status |
 |---|---|---|---|---|---|
-| 164273 | Completed NRP Projects 2009–2022 | `edmonton-tax-viz` | Last unread source for the road reconstruction sub-asset split (its `docs/SPEC_cost_gaps.md` §3.1) | 2026-11-24 | wanted: 403 from a script, re-tested 2026-11-16 |
-| 286947 | City Auditor's Neighbourhood Renewal audit | `edmonton-tax-viz` | Same as 164273 | 2026-11-24 | wanted: 403 from a script, re-tested 2026-11-16 |
-| 295439 | Signed Bylaw 21442, 2026 Property Tax and Supplementary Property Tax Bylaw (published 2026-04-29). Item 8.1, City Council 2026-04-28; report FCS03408 is 295436 and the unsigned bylaw is 295437 | `edmonton-tax-viz` | Blind check of the 2026 mill rates against the primary document, not the `pwis-wc4c` dataset | 2026-11-24 | wanted: the old gov.edmonton.ab.ca link now 404s (tested 2026-11-24 by the requester); eSCRIBE attachments 403 from a script |
+| 164273 | Completed NRP Projects 2009–2022 | `edmonton-tax-viz` | Last unread source for the road reconstruction sub-asset split (its `docs/SPEC_cost_gaps.md` §3.1) | 2026-11-24 | PDF obtained 2026-11-24 (route C, laptop), text layer ok; text not yet in the private repo |
+| 286947 | City Auditor's Neighbourhood Renewal audit | `edmonton-tax-viz` | Same as 164273 | 2026-11-24 | PDF obtained 2026-11-24 (route C, laptop), text layer ok; text not yet in the private repo. Only 2 pages: may be the cover report, the full audit possibly a separate attachment (unchecked) |
+| 295439 | Signed Bylaw 21442, 2026 Property Tax and Supplementary Property Tax Bylaw (published 2026-04-29). Item 8.1, City Council 2026-04-28; report FCS03408 is 295436 and the unsigned bylaw is 295437 | `edmonton-tax-viz` | Blind check of the 2026 mill rates against the primary document, not the `pwis-wc4c` dataset | 2026-11-24 | PDF obtained 2026-11-24 (route C, laptop): a scan, no text layer. The unsigned 295437 (obtained, text ok) passed all three readings unamended per the 04-28 minutes, so its text stands in; cite 295439. Text not yet in the private repo |
 
 URLs follow `https://pub-edmonton.escribemeetings.com/filestream.ashx?DocumentId=<id>`.

@@ -52,12 +52,15 @@ The message to the requester names anything missing and any substitute used.
 | 4785 | Tax Policy Discussion - CR_7218 - Attachment 1 - Property Tax Policy Discussion Paper.pdf (Executive Committee 2020-01-27, meeting `fe4da525-7c4c-4578-b353-8cfa4a30e5c8`) | `alberta-regional-viz` | Phase 2c core-vs-ring property tax rates (pooled regional rate, rate gap) and their captions: Any rate comparison with neighbours | 2026-11-26 | wanted |
 | 16753 | Edmontons Business Climate Competitiveness - CR_4256 Attachment 1 - Edmontons Business Competitiveness Report June 5 1.pdf (Executive Committee 2017-07-04, meeting `17783c7c-a84c-49df-924b-4bbb9069483f`) | `alberta-regional-viz` | Phase 2c core-vs-ring property tax rates (pooled regional rate, rate gap) and their captions: Rate and tax-burden comparison | 2026-11-26 | wanted |
 | 226114 | Report - FCS02483 Budget Update - Non-residential Tax Base Growth Challenges.pdf (Executive Committee 2024-06-19, meeting `cb68655b-0b7c-466e-9937-23d378a474be`) | `alberta-regional-viz` | Phase 2c core-vs-ring property tax rates (pooled regional rate, rate gap) and their captions: The non-residential base decline the headline share shows | 2026-11-26 | wanted |
+| 130904 | REPORT - FCS00406 - Leduc Annexation Area Assessment Potential Adjustments.pdf (City Council 2022-02-22, meeting `4095f41b-83b1-4b17-b008-6889aa9f1ebc`) | `alberta-regional-viz` | Phase 2c core-vs-ring property tax rates: rate the legacy annexed properties pay (county or city), which classes, end year, non-residential assessment or levy affected 2019–2026 | 2026-11-27 | wanted |
+| 176400 | FCS01500 Leduc Annexation Area Assessment Potential Adjustments Council Report .pdf (City Council 2023-02-22, meeting `3287dbd9-fd34-4230-bd72-a2ef7d37179f`) | `alberta-regional-viz` | Phase 2c core-vs-ring property tax rates: rate the legacy annexed properties pay (county or city), which classes, end year, non-residential assessment or levy affected 2019–2026 | 2026-11-27 | wanted |
+| 130903 | Executive Committee Report 2 - Leduc Annexation Exemptions.pdf (City Council 2022-02-22, meeting `4095f41b-83b1-4b17-b008-6889aa9f1ebc`) | `alberta-regional-viz` | Phase 2c core-vs-ring property tax rates: rate the legacy annexed properties pay (county or city), which classes, end year, non-residential assessment or levy affected 2019–2026 | 2026-11-27 | wanted |
 
 URLs follow `https://pub-edmonton.escribemeetings.com/filestream.ashx?DocumentId=<id>`.
 
 ## Later
 
-Requested but not to be fetched yet: fetch when fetching gets cheaper (a batch route), or when the requester asks. Status `later`; a row moves up to the main table as `wanted` when it is promoted. All requested by `alberta-regional-viz` on 2026-11-26 (130904 and 176400 on 2026-11-27) for Phase 2c core-vs-ring property tax rates (pooled regional rate, rate gap) and their captions; ids are from the 2017–2025 agenda title scan.
+Requested but not to be fetched yet: fetch when fetching gets cheaper (a batch route), or when the requester asks. Status `later`; a row moves up to the main table as `wanted` when it is promoted. All requested by `alberta-regional-viz` on 2026-11-26 for Phase 2c core-vs-ring property tax rates (pooled regional rate, rate gap) and their captions; ids are from the 2017–2025 agenda title scan.
 
 | DocumentId | Title | Group | Status |
 |---|---|---|---|
@@ -97,5 +100,3 @@ Requested but not to be fetched yet: fetch when fetching gets cheaper (a batch r
 | 3397 | 2020 Alberta Urban Municipalities Association Reso - CR_8381 - Attachment 2 - Fiscal Framework.pdf (City Council 2020-06-22, meeting `057b539c-bcf4-4139-9150-3d06c47c9677`) | Fiscal gap and transit | later |
 | 3398 | 2020 Alberta Urban Municipalities Association Reso - CR_8381 - Attachment 3 - Permanent Transit Funding.pdf (City Council 2020-06-22, meeting `057b539c-bcf4-4139-9150-3d06c47c9677`) | Fiscal gap and transit | later |
 | 135559 | REPORT - CO00803 Bus Network Expansion Opportunities - Transit Funding Model Options.pdf (Executive Committee 2022-03-23, meeting `ab98dfb3-b8d3-487a-b0d2-370c6fbd308b`) | Fiscal gap and transit | later |
-| 130904 | REPORT - FCS00406 - Leduc Annexation Area Assessment Potential Adjustments.pdf (City Council 2022-02-22, meeting `4095f41b-83b1-4b17-b008-6889aa9f1ebc`) | Regional sharing | later |
-| 176400 | FCS01500 Leduc Annexation Area Assessment Potential Adjustments Council Report .pdf (City Council 2023-02-22, meeting `3287dbd9-fd34-4230-bd72-a2ef7d37179f`) | Regional sharing | later |

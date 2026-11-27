@@ -57,7 +57,7 @@ URLs follow `https://pub-edmonton.escribemeetings.com/filestream.ashx?DocumentId
 
 ## Later
 
-Requested but not to be fetched yet: fetch when fetching gets cheaper (a batch route), or when the requester asks. Status `later`; a row moves up to the main table as `wanted` when it is promoted. All requested by `alberta-regional-viz` on 2026-11-26 for Phase 2c core-vs-ring property tax rates (pooled regional rate, rate gap) and their captions; ids are from the 2017–2025 agenda title scan.
+Requested but not to be fetched yet: fetch when fetching gets cheaper (a batch route), or when the requester asks. Status `later`; a row moves up to the main table as `wanted` when it is promoted. All requested by `alberta-regional-viz` on 2026-11-26 (130904 and 176400 on 2026-11-27) for Phase 2c core-vs-ring property tax rates (pooled regional rate, rate gap) and their captions; ids are from the 2017–2025 agenda title scan.
 
 | DocumentId | Title | Group | Status |
 |---|---|---|---|
@@ -97,3 +97,5 @@ Requested but not to be fetched yet: fetch when fetching gets cheaper (a batch r
 | 3397 | 2020 Alberta Urban Municipalities Association Reso - CR_8381 - Attachment 2 - Fiscal Framework.pdf (City Council 2020-06-22, meeting `057b539c-bcf4-4139-9150-3d06c47c9677`) | Fiscal gap and transit | later |
 | 3398 | 2020 Alberta Urban Municipalities Association Reso - CR_8381 - Attachment 3 - Permanent Transit Funding.pdf (City Council 2020-06-22, meeting `057b539c-bcf4-4139-9150-3d06c47c9677`) | Fiscal gap and transit | later |
 | 135559 | REPORT - CO00803 Bus Network Expansion Opportunities - Transit Funding Model Options.pdf (Executive Committee 2022-03-23, meeting `ab98dfb3-b8d3-487a-b0d2-370c6fbd308b`) | Fiscal gap and transit | later |
+| 130904 | REPORT - FCS00406 - Leduc Annexation Area Assessment Potential Adjustments.pdf (City Council 2022-02-22, meeting `4095f41b-83b1-4b17-b008-6889aa9f1ebc`) | Regional sharing | later |
+| 176400 | FCS01500 Leduc Annexation Area Assessment Potential Adjustments Council Report .pdf (City Council 2023-02-22, meeting `3287dbd9-fd34-4230-bd72-a2ef7d37179f`) | Regional sharing | later |

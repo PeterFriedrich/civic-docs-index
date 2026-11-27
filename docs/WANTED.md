@@ -10,6 +10,17 @@ DocumentId, the title, the requesting project, and why it's needed. This
 session owns the file and makes the edit. Titles and DocumentIds are allowed
 here; document text is not (`docs/DECISIONS.md`, 2026-11-16).
 
+**Why by message:** decided 2026-11-27. Requests stay direct messages until
+search ships. Then one MCP server carries `search`, `request_document` and
+`request_status`, with requests in a table in the SQLite index and this file
+generated from that table. Why wait: with two requesters and about ten active
+rows, intake isn't the bottleneck (the laptop downloads are), and a server for
+requests alone would be a running service with almost nothing to do. Rejected:
+a request database without the MCP, because other sessions would write into
+this project's file directly, unvalidated, which breaks "only the owner edits".
+Switch earlier if requests outpace this session or requesters keep asking for
+status.
+
 **When one is fetched:** its extracted text goes to the private repo
 `civic-docs-index-data` (`src/ingest_pdf.py`), the row's status becomes `fetched YYYY-MM-DD` with
 the text's path there, and the requester is told by `SendMessage` (no GitHub issue,

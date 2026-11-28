@@ -61,8 +61,10 @@ terms. For each file:
    expected failure and must be reported as a failure, not as a document.
 2. sha256, byte size and page count are recorded. The same DocumentId must
    give the same sha256 by every route that returns it.
-3. Text extraction gives non-empty text for at least one page, or the file is
-   recorded as "scanned, no text layer". Never silently skipped.
+3. Text extraction gives text pages, or the file is recorded as "scanned"
+   (since 2026-11-27: most pages under 100 bytes of text, which catches a scan
+   with a stamped header on every page; before, only a file with no text at
+   all). Never silently skipped.
 4. For 263222 only: the extracted text of the two transcribed pages contains
    the transcribed figures.
 

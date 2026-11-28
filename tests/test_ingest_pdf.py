@@ -82,7 +82,7 @@ WORD_PER_LINE = "THE\n \nCITY\n \nOF\n \nEDMONTON\n \n \nBYLAW\n \n21442\n \n"
 def test_word_per_line_text_is_kept_and_flagged(tmp_path, monkeypatch, capsys):
     import pypdf
 
-    monkeypatch.setattr(pypdf.PageObject, "extract_text", lambda self, *a, **k: WORD_PER_LINE)
+    monkeypatch.setattr(pypdf.PageObject, "extract_text", lambda self, *a, **k: WORD_PER_LINE * 4)  # long enough not to be a thin page
     rc, root = run(tmp_path, make_pdf(["alpha"]))
     assert rc == 0
     assert '"word_per_line": true' in capsys.readouterr().out
@@ -108,3 +108,44 @@ def test_old_manifest_header_refused_nothing_appended(tmp_path, capsys):
     assert "manifest header" in capsys.readouterr().out
     assert (root / "manifest.csv").read_text() == old
     assert not (root / "text").exists()
+
+
+def test_recheck_turns_a_stamped_scan_into_a_scan_and_drops_its_text(tmp_path, monkeypatch, capsys):
+    from src import check_pdf
+
+    # Ingest under the old rule (scan = no text at all), then recheck under the current one.
+    stamp = make_pdf(["Attachment #1 Page 1 of 1 Report: CR_0000"], pad=False)
+    monkeypatch.setattr(check_pdf, "SCAN_PAGE_BYTES", 0)
+    run(tmp_path, stamp)
+    root = tmp_path / "private"
+    assert manifest(root)[0]["scanned"] == "0" and (root / "text" / "101.txt").exists()
+    monkeypatch.undo()
+    capsys.readouterr()
+    assert ingest_pdf.main(["--recheck", "--root", str(root)]) == 0
+    assert '"changed": {"scanned": ["0", "1"]}' in capsys.readouterr().out
+    [row] = manifest(root)
+    assert (row["scanned"], row["obtained"], row["route"]) == ("1", "2026-11-24", "C")  # provenance kept
+    assert not (root / "text" / "101.txt").exists()
+
+
+def test_recheck_reports_rows_it_cannot_recheck(tmp_path, capsys):
+    run(tmp_path, make_pdf(["alpha"]), doc_id="101")
+    run(tmp_path, make_pdf(["beta"]), doc_id="102")
+    root = tmp_path / "private"
+    (root / "pdfs" / "101.pdf").unlink()
+    (root / "pdfs" / "102.pdf").write_bytes(make_pdf(["gamma"]))
+    capsys.readouterr()
+    assert ingest_pdf.main(["--recheck", "--root", str(root)]) == 0
+    out = capsys.readouterr().out
+    assert "no kept PDF" in out and "is not the manifest's" in out
+    assert len(manifest(root)) == 2
+
+
+def test_recheck_with_nothing_changed_prints_nothing_and_keeps_the_manifest(tmp_path, capsys):
+    run(tmp_path, make_pdf(["alpha"]))
+    root = tmp_path / "private"
+    before = (root / "manifest.csv").read_text()
+    capsys.readouterr()
+    assert ingest_pdf.main(["--recheck", "--root", str(root)]) == 0
+    assert capsys.readouterr().out == ""
+    assert (root / "manifest.csv").read_text() == before

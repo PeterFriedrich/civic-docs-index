@@ -9,6 +9,9 @@ EXPECT.json maps a 1-based page number to strings that page's text must
 contain, e.g. {"6": ["254.9"]}. Known answers are document text, so they live
 in the private data repo, not here.
 
+A file is "scanned" when most pages have under SCAN_PAGE_BYTES of text, even if each
+carries a stamped header.
+
 Exit codes: 0 ok or scanned (recorded, not a failure); 1 failed (2 is argparse's).
 """
 import argparse
@@ -19,6 +22,8 @@ import sys
 from pathlib import Path
 
 from pypdf import PdfReader
+
+SCAN_PAGE_BYTES = 100
 
 
 def _squash(text: str) -> str:
@@ -46,7 +51,11 @@ def check(path: Path, expect: dict[str, list[str]] | None = None) -> dict:
     out["pages"] = len(texts)
     out["text_bytes_per_page"] = [len(t.encode()) for t in texts]
     out["text_bytes"] = sum(out["text_bytes_per_page"])
-    scanned = not any(t.strip() for t in texts)
+    # A scan can still carry a stamped text header on every page (9739: 43 bytes a page), so
+    # "no text at all" misses it. Pages under SCAN_PAGE_BYTES are thin; a file is a scan when most
+    # are. On 2026-11-27 the 2 scans had 11/11 and 13/13 thin pages, the 17 text files at most 10/159.
+    out["thin_pages"] = sum(1 for b in out["text_bytes_per_page"] if b < SCAN_PAGE_BYTES)
+    scanned = out["thin_pages"] * 2 > len(texts)
 
     for page, wanted in (expect or {}).items():
         i = int(page) - 1
@@ -58,7 +67,7 @@ def check(path: Path, expect: dict[str, list[str]] | None = None) -> dict:
                     f"p.{page}: {w!r} not found" + (f" (found on p.{elsewhere})" if elsewhere else "")
                 )
     if not out["failures"]:
-        out["status"] = "scanned, no text layer" if scanned else "ok"
+        out["status"] = "scanned" if scanned else "ok"
     return out
 
 

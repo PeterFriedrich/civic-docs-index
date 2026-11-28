@@ -10,8 +10,16 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from src import check_pdf  # noqa: E402
 
 
-def make_pdf(pages: list[str]) -> bytes:
-    """A minimal text-layer PDF, one string per page ('' gives a page with no text)."""
+# Real text pages carry hundreds of bytes; a bare "alpha" page would count as thin (scan-like).
+FILLER = " and the remaining body text of this made-up page, which runs on for well over the hundred bytes that a text page needs"
+
+
+def make_pdf(pages: list[str], pad: bool = True) -> bytes:
+    """A minimal text-layer PDF, one string per page ('' gives a page with no text).
+
+    pad appends FILLER to each non-empty page so it is a text page, not a thin one.
+    """
+    pages = [t + FILLER if t and pad else t for t in pages]
     n = len(pages)
     objs = [
         b"<< /Type /Catalog /Pages 2 0 R >>",
@@ -75,8 +83,21 @@ def test_figure_on_the_wrong_page_fails_and_says_where(tmp_path):
 def test_pdf_without_text_is_recorded_as_scanned_not_dropped(tmp_path):
     p = write(tmp_path, make_pdf(["", ""]))
     r = check_pdf.check(p)
-    assert r["status"] == "scanned, no text layer" and r["pages"] == 2
+    assert r["status"] == "scanned" and r["pages"] == 2
     assert check_pdf.main([str(p)]) == 0
+
+
+def test_scan_with_a_stamped_header_on_every_page_is_scanned(tmp_path):
+    # 9739: 13 scanned pages whose only text is the stamp "Attachment #1 Page N of 13 Report: CR_6544".
+    stamps = [f"Attachment #1 Page {i} of 3 Report: CR_0000" for i in range(1, 4)]
+    r = check_pdf.check(write(tmp_path, make_pdf(stamps, pad=False)))
+    assert r["status"] == "scanned" and r["thin_pages"] == 3 and r["text_bytes"] > 0
+
+
+def test_a_few_thin_pages_do_not_make_a_text_file_a_scan(tmp_path):
+    # Divider and blank pages occur in text files (236515: 10 of 159); half or fewer thin is text.
+    r = check_pdf.check(write(tmp_path, make_pdf(["Widgets 12,345", "", "Total 67.8M", ""])))
+    assert r["status"] == "ok" and r["thin_pages"] == 2
 
 
 def test_truncated_pdf_fails(tmp_path):
